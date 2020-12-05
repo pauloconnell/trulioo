@@ -1,3 +1,5 @@
+// Below is the input box script
+///////////////////////////////////////////////////////////////////
 // client-side js, loaded by index.html
 // run by the browser each time the page is loaded
 

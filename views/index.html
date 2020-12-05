@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="/style.css">
 
     <!-- import the webpage's client-side javascript file -->
-    <script src="/script.js" defer></script>
+    <script src="/index.js" defer></script>
   </head>
   <body><center>
     <header>
@@ -24,6 +24,83 @@
 
     <main>
       <h2>Using Trulioo's trusted verification to aggregate strata member's feedback. </h2>
+      <hr>
+      <div id="trulioo-embedid"></div>
+
+<!-- This script renders the form for the div above --> 
+<script type="text/javascript" src="https://js.trulioo.com/latest/main.js"></script>
+
+<!-- Initialize your form here with your Frontend (FE) key -->
+<script> 
+  // Handle the response of EmbedID after form submits
+  function handleResponse(e) { 
+    if(!e){
+      console.log("handle response called with no object");
+      return;
+    }
+    console.log('inside index.html script handleResponse data:', e); 
+    console.log(" called/logged after submitting form, response is :",e.experienceTransactionId);
+    let txId=e.experienceTransactionId;
+    // now send this TxId to backend to make secure connection:
+    let sendBackUrl='https://gateway.trulioo.com/experienceTransaction/'+txId;
+    if(!sendBackUrl){ 
+      console.log(" failed to get TxId  ");
+      return;
+    }
+   // now send getURL to back end...use post?  create api to handle?     
+    
+    // this call needs to happen from the backend to hide env.key
+    var options = {
+      method: 'POST',
+      body:sendBackUrl,
+      headers:{
+        "Content-Type":"application/json"
+      }
+      
+    };
+    console.log("about to send txId to backEnd");
+    var displayResult= document.getElementById("verifiedResponse");
+    displayResult.value="verifying...";
+    fetch('/api',options).then(data => {
+      displayResult.value=JSON.stringify(data);
+      console.log("data recieved after api call",data);
+    });
+      
+
+    
+    
+    
+    //this is backend call
+//     request.headers={x-trulioo-api-key: {cad38158eeb147b38cc7e43d2fd25f05}}
+//       request(options, function (error, response, body) {
+//       if (error) throw new Error(error);
+//       console.log("server.js response.connection.eventsCount is ", response.connection._eventsCount)
+//       console.log("inside initial server request ",Object.keys(response.connection));
+//       console.log(" connection secureEstablished? authorized? ",response.connection._secureEstablished, response.connection.authorized)
+
+//     });
+    
+    
+      
+  }  // end of handleResponse
+
+  
+  const publicKey = "628a2962f17f4b5da4a32678294861e6"; // Public Key
+  const accessTokenURL = 'http://localhost:8080';
+  new TruliooClient({ 
+    publicKey, 
+   // accessTokenURL, //handled by middleware
+    handleResponse 
+  });
+  //see errorin TruliooCLient @ 97, seems it requires this abstract function to be defined:
+  function errorHandler(err,str){
+    console.log(err,str);
+  }
+  
+  
+</script>
+      <textarea readonly id="verifiedResponse"> Please verify above
+      </textarea>
       <hr>
       <p>Please select your primary concern in terms of <br><b>Strata Capital Projects:</b></p>
 
@@ -40,9 +117,11 @@
       <button type="button" id="button-no">Avoid/No Capital expenses</button>  
       <hr>
       <section class="dreams">
-        <ul id="dreams">
-          <em>loading dreams&hellip;</em>
-        </ul>
+        <div id="strataList">
+          <ul id="dreams">
+            <em>loading dreams&hellip;</em>
+          </ul>
+        </div>
       </section>
       <section id="trulioo">
       
