@@ -52,18 +52,31 @@
     // this call needs to happen from the backend to hide env.key
     var options = {
       method: 'POST',
-      body:sendBackUrl,
       headers:{
         "Content-Type":"application/json"
-      }
+      },
+      body:JSON.stringify({"url":sendBackUrl})
       
     };
     console.log("about to send txId to backEnd");
     var displayResult= document.getElementById("verifiedResponse");
+    var sendName=document.getElementById("verifiedName");
     displayResult.value="verifying...";
-    fetch('/api',options).then(data => {
-      displayResult.value=JSON.stringify(data);
-      console.log("data recieved after api call",data);
+    fetch('/api', options).then(data => data.json()).then(data=>{
+      let returnedJson=data;
+      console.log(" index html 66 returnedJson is ", returnedJson);
+      if(returnedJson=='nomatch'){
+        displayResult.value="Sorry, NOT verified based on data you entered, refresh page and try again "+JSON.stringify(returnedJson);
+        
+      }
+      else{
+        displayResult.value="recieved "+JSON.stringify(returnedJson);
+        console.log(returnedJson, returnedJson.FirstName, returnedJson.LastName)
+        if(returnedJson.FirstName){
+          sendName.value=returnedJson.FirstName;
+        }
+          console.log("data received after api call", returnedJson);
+      }
     });
       
 
@@ -99,22 +112,24 @@
   
   
 </script>
-      <textarea readonly id="verifiedResponse"> Please verify above
-      </textarea>
+      <h2 id="verifiedResponse"> Please verify above
+      </h2>
       <hr>
       <p>Please select your primary concern in terms of <br><b>Strata Capital Projects:</b></p>
 
       <form>
         <label>
-          Enter Project and Details:
-          <input name="dream" type="text" maxlength="100" required placeholder="Specific Capital Project">
+          Enter Project and Details:        
         </label>
+          <input name="dream" type="text" maxlength="100" required placeholder="Specific Capital Project">
+          <input readonly name="verifiedName" type="text" placeholder="Please verify above ">
         <center>
         <button type="submit" id="submit-concern">Add Capital Expense request/concern</button>
+        <button type="button" id="button-no">Avoid/No Capital expenses</button> 
         </center>
       </form>
 
-      <button type="button" id="button-no">Avoid/No Capital expenses</button>  
+       
       <hr>
       <section class="dreams">
         <div id="strataList">

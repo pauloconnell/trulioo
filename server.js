@@ -21,6 +21,7 @@ const dreams = [
 
 // make all the files in 'public' available
 app.use(express.static("public"));
+app.use(express.json({limit:'1mb'}));
 app.all('/', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -81,31 +82,38 @@ request(options, function (error, response, body) {
 
 // set up simple api to handle unique transId to call with
 app.post("/api",(req, res)=>{
-  console.log("Server.js 77 recieved from front end ", req.headers, req.body, Object.keys(req));
-  var transId=req.experienceTransactionId;
-  console.log("transId is ", transId);
+ 
+  console.log("Server.js 87 recieved from front end ",req.body );
+  var transIdURL=req.body.url;
+  console.log("88transId in URL is ", transIdURL);
   //if(req.body.sendBackUrl){
   //  transId=req.body.sendBackUrl;
   //  }
-  if(!transId){
+  if(!transIdURL){
     console.log("failed verification");
-    return res.send("verification failed");
+    return res.json({"verification": "failed"});
   }else{
     var options = {
     method: 'GET',
-    url: 'https://gateway.trulioo.com/experienceTransaction/'+transId,
+    url: transIdURL,
     headers: {
-
-    }
+      'cache-control': 'no-cache',
+      'content-type': 'application/json',
+      'x-trulioo-api-key': process.env.BE
+      }
     };
 
     request(options, function (error, response, body) {
     if (error) throw new Error(error);
-    console.log(" 87 server.js response keys are  ", Object.keys(response));
-    console.log("inside request  Server.js 88 result is :", response.transactionResult);
+    //console.log(" 87 server.js response keys are  ", Object.keys(response));
+    console.log("inside request  Server.js 108 result of verification is :", typeof(body), body);
     //document.getElementById("trulioo")=body;
-    console.log("body is ", body);
-    response.send(response.transactionResult);
+    let jsonOutput=JSON.parse(body);
+    console.log(" body keys are ", Object.keys(jsonOutput));
+    
+      console.log("output will be ", jsonOutput.transactionResult, jsonOutput.steps[0].inputFields[1], jsonOutput.steps[0].inputFields[2]);//.transactionResult);
+      let responseObject=Object.assign(jsonOutput.transactionResult+ jsonOutput.steps[0].inputFields[0].FirstName+ jsonOutput.steps[0].inputFields[0].LastName);
+      res.json(responseObject);//jsonOutput.transactionResult);//.transactionResult);
   });
  }  
 });
