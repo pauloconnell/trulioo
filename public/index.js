@@ -1,7 +1,4 @@
-// Below is the input box script
-///////////////////////////////////////////////////////////////////
 // client-side js, loaded by index.html
-// run by the browser each time the page is loaded
 
 console.log("hello world :o");
 
@@ -9,7 +6,7 @@ console.log("hello world :o");
 const dreamsList = document.getElementById("dreams");
 const dreamsForm = document.querySelector("form");
 const noExpenseButton=document.getElementById("button-no");
-// a helper function that creates a list item for a given dream
+// a helper function that creates a list of <li>. takes items='dream' adds to list ='dreamsList'
 function appendNewDream(dream) {
   const newListItem = document.createElement("li");
   newListItem.innerText = dream;
