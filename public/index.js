@@ -1,3 +1,5 @@
+// Below is the input box script
+///////////////////////////////////////////////////////////////////
 // client-side js, loaded by index.html
 // run by the browser each time the page is loaded
 
@@ -32,7 +34,7 @@ fetch("/dreams")
       event.preventDefault();
       console.log(event.target);
       // get dream value and add it to the list
-      let newDream = dreamsForm.elements.dream.value;
+      let newDream = document.getElementById("capitalRequest").value;
       dreams.push(newDream);
       appendNewDream(newDream);
       // reset form
@@ -45,9 +47,9 @@ fetch("/dreams")
 
 noExpenseButton.addEventListener("click", event=>{
       console.log("Inside button id:",event.target.id);
-      let newDream = dreamsForm.elements.dream.value;
+      let newDream = event.target.value; //dreamsForm.elements.dream.value;
       if (!newDream){
-        newDream="*ANY POSSIBLE TO AVOID/MINIMIZE*";
+        newDream="*AVOID/MINIMIZE ALL CAPITAL *";
       }
       newDream="Avoid Captital expense "+newDream;
       console.log(dreamsList, newDream);
