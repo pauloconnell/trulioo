@@ -30,9 +30,9 @@ app.all('/', function(req, res, next) {
 
 
 const truliooMiddleware = require('trulioo-embedid-middleware')({ 
-apiKey: process.env.BE2 });  
+apiKey: process.env.BE });  //switch experience (data fields required) by using other apiKeys like BE2(used for testing)
 const port = 8080; 
-// truliooMiddleware will fetch accesstoken and handle it
+// truliooMiddleware will handle accesstoken 
 app.use(truliooMiddleware); 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`)); 
 
