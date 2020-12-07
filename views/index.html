@@ -60,23 +60,26 @@
     };
     console.log("about to send txId to backEnd");
     var displayResult= document.getElementById("verifiedResponse");
-    var sendName=document.getElementById("verifiedName");
-    displayResult.value="verifying...";
-    fetch('/api', options).then(data => data.json()).then(data=>{
-      let returnedJson=data;
-      console.log(" index html 66 returnedJson is ", returnedJson);
-      if(returnedJson=='nomatch'){
-        displayResult.value="Sorry, NOT verified based on data you entered, refresh page and try again "+JSON.stringify(returnedJson);
-        
-      }
-      else{
-        displayResult.value="recieved "+JSON.stringify(returnedJson);
-        console.log(returnedJson, returnedJson.FirstName, returnedJson.LastName)
-        if(returnedJson.FirstName){
-          sendName.value=returnedJson.FirstName;
+    displayResult.innerHTML="verifying...";
+    fetch('/api', options).then(data => data.json())
+      .then(data=>{
+//        var sendName=document.getElementById("verifiedName");
+        let returnedJson=data;
+        console.log(" index html 66 returnedJson is ", returnedJson);
+        if(returnedJson.verification_Result=='nomatch'){
+          displayResult.innerHTML="Sorry, NOT verified based on data you entered, please refresh page and try again "+JSON.stringify(returnedJson);
+          document.getElementById("verifiedName").readOnly=false; 
+          document.getElementById("verifiedName").value="Not Verified, please refresh page";
+          document.getElementById("verifiedName").readOnly=true;
         }
-          console.log("data received after api call", returnedJson);
-      }
+        else{
+          displayResult.innerHTML="Verified :) "+JSON.stringify(returnedJson);
+          console.log(returnedJson, returnedJson.firstName, returnedJson.lastName)
+          if(returnedJson.FirstName){
+            sendName.value=returnedJson.FirstName;
+          }
+            console.log("data received after api call", returnedJson);
+        }
     });
       
 
@@ -107,7 +110,7 @@
   });
   //see errorin TruliooCLient @ 97, seems it requires this abstract function to be defined:
   function errorHandler(err,str){
-    console.log(err,str);
+    console.log("TruliooClient error caught in index.html line 110", err, str);
   }
   
   
@@ -122,7 +125,7 @@
           Enter Project and Details:        
         </label>
           <input name="dream" type="text" maxlength="100" required placeholder="Specific Capital Project">
-          <input readonly name="verifiedName" type="text" placeholder="Please verify above ">
+          <input readonly name="verifiedName" type="text" required placeholder="Please verify above ">
         <center>
         <button type="submit" id="submit-concern">Add Capital Expense request/concern</button>
         <button type="button" id="button-no">Avoid/No Capital expenses</button> 
@@ -147,7 +150,7 @@
 
     <!-- include the Glitch button to show what the webpage is about and
           to make it easier for folks to view source and remix -->
-    <div class="glitchButton" style="position:fixed;top:2em;right:20px;"></div>
+    <div class="glitchButton" style="position:fixed;top:2em;right:20px;"> View source in Glitch</div>
     <script src="https://button.glitch.me/button.js" defer></script>
     </center>
     

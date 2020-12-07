@@ -111,18 +111,21 @@ app.post("/api",(req, res)=>{
     let jsonOutput=JSON.parse(body);
     console.log(" body keys are ", Object.keys(jsonOutput));
     
-      console.log("output will be ", jsonOutput.transactionResult, jsonOutput.steps[0].inputFields[1], jsonOutput.steps[0].inputFields[2]);//.transactionResult);
-      let responseObject=Object.assign(jsonOutput.transactionResult+ jsonOutput.steps[0].inputFields[0].FirstName+ jsonOutput.steps[0].inputFields[0].LastName);
+      //console.log("output will be ", {"verification Result": jsonOutput.transactionResult}, jsonOutput.steps[0].inputFields[4], jsonOutput.steps[0].inputFields[5]);//.transactionResult);
+      let responseObject={"verification_Result": jsonOutput.transactionResult};
+      responseObject.firstName=jsonOutput.steps[0].inputFields[4].Value;
+      responseObject.lastName=jsonOutput.steps[0].inputFields[5].Value;
+      console.log("send back to front end: ", responseObject);
       res.json(responseObject);//jsonOutput.transactionResult);//.transactionResult);
   });
  }  
 });
 
-//send data from 
-app.post("https://gateway.trulioo.com/trial/verifications/v1/verify?",(req,res)=>{
-  console.log(res);
+// //send data from 
+// app.post("https://gateway.trulioo.com/trial/verifications/v1/verify?",(req,res)=>{
+//   console.log(res);
   
-});
+// });
 
  
 
