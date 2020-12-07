@@ -35,7 +35,9 @@ fetch("/dreams")
       console.log(event.target);
       // get dream value and add it to the list
       let newDream = document.getElementById("capitalRequest").value;
-      dreams.push(newDream);
+      //dreams.push(newDream);
+       const thisName=document.getElementById("verifiedName").value;
+      newDream=`${newDream} Voter: ${thisName}`
       appendNewDream(newDream);
       // reset form
       dreamsForm.reset();
@@ -49,9 +51,11 @@ noExpenseButton.addEventListener("click", event=>{
       console.log("Inside button id:",event.target.id);
       let newDream = event.target.value; //dreamsForm.elements.dream.value;
       if (!newDream){
-        newDream="*AVOID/MINIMIZE ALL CAPITAL *";
+        newDream=" *ALL/ANY  AVOID or MINIMIZE *";
       }
-      newDream="Avoid Captital expense "+newDream;
+      newDream="Avoid Captital expense related to: "+newDream;
+      const thisName=document.getElementById("verifiedName").value;
+      newDream=newDream+thisName;
       console.log(dreamsList, newDream);
       //dreamsList.push(newDream);
       appendNewDream(newDream);
