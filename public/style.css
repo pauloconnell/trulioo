@@ -67,3 +67,7 @@ footer {
 #verifiedResponse {
   background-color:rgba(192,192,192,.7);
 }
+
+#tryAgain {
+  background-color:yellow;
+}
