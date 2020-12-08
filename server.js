@@ -96,6 +96,49 @@ app.post("/api",(req, res)=>{
 });
 
 
+// just playing around with verification results here: 
+// querry below API with firstNameLastName to see if we have thier info:
+app.get("/getFields/:name", (req, res)=> {
+  var name=req.params.name;
+  console.log("inside server.js getFields", name )
+  var options = {
+    method: 'GET',
+    url: "https://gateway.trulioo.com/trial/configuration/v1/testentities/Identity Verification/US",
+    headers: {
+      'cache-control': 'no-cache',
+      'content-type': 'application/json',
+      'x-trulioo-api-key': process.env.BE
+      }
+    };
+
+    request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+      let peopleList=JSON.parse(body);
+      
+      console.log("People List is ", typeof peopleList );
+      // iterate through PeopleList to search for our Person
+      for (var i=0; i<peopleList.length; i++){
+        console.log(peopleList[i]);
+        // note convention used here is FirstNameLastName
+        let checkName=peopleList[i].PersonInfo.FirstGivenName + peopleList[i].PersonInfo.FirstSurName; 
+        console.log("does "+ checkName+" = "+name);
+       
+        if(checkName==name){
+          console.log(name+"passed");
+          return res.send(name+" has been verified");  
+        }
+        
+      }
+      
+                         
+      
+     
+      if(!peopleList[0]){
+        res.send("Must verify first, please reset page and complete verification form");
+      }
+      //res.send(JSON.stringify(peopleList[0]));
+    });
+});
  
 
 // send the default array of dreams to the webpage

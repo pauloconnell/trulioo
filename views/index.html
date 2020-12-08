@@ -19,11 +19,13 @@
   </head>
   <body><center>
     <header>
+      <div class="background">
       <h1>Municiple Capital Expense WishList</h1>
+      </div>
     </header>
 
     <main>
-      <h2> Join with Trulioo's trusted verification.  Help us get comunity feedback. </h2>
+      <h2> Join with Trulioo's trusted verification.  Help us get community feedback. </h2>
       <hr>
       <div id="trulioo-embedid"></div>
 
@@ -86,6 +88,8 @@
             document.getElementById("verifiedName").readOnly=false; 
             document.getElementById("verifiedName").value=`${returnedJson.firstName} : VERIFIED`;
             document.getElementById("verifiedName").readOnly=true;
+            document.getElementById("tryAgain").innerHTML="";  // reset
+           
           }
             console.log("data received after api call", returnedJson);
         }
@@ -106,7 +110,6 @@
     console.log("TruliooClient error caught in index.html line 110", err, str);
   }
   
-  
 </script>
       <h2 id="verifiedResponse"> Please verify above
       </h2>
@@ -122,7 +125,7 @@
         <span class="background" >
         <input type="checkbox" id="noCapitalExpense" name="noCapitalExpense"><label for="noCapitalExpense">Avoid expenses</label> 
         </span>
-        <span class="background">
+        <span class="background" id="nameSpan">
         <label for="verifiedName">Name: completed when verified</label>  
         <input readonly name="verifiedName" id="verifiedName" type="text" placeholder="Please verify above " required>
         </span>  
@@ -130,11 +133,11 @@
           <div id="tryAgain">
           </div>
         <button type="submit" id="submit-concern">Add Capital Expense request/concern</button>
-        
+          
         </center>
       </form>
-
-       
+      <div id="getMyData">
+      </div>
       <hr>
       <section class="dreams">
         <div class="background">
