@@ -75,9 +75,7 @@
           document.getElementById("verifiedName").readOnly=true;
           // Not verified => disable buttons to force refresh so EmbedId can be tried again
           document.getElementById("submit-concern").disabled = true;
-         // document.getElementById("button-no").disabled = true;
           document.getElementById("submit-concern").style.backgroundColor = 'Red';
-          //document.getElementById("button-no").style.backgroundColor = 'Red';
         }
         else{
           displayResult.innerHTML="Verified :) Welcome "+returnedJson.firstName+"You may use form below:";
@@ -88,7 +86,7 @@
             document.getElementById("verifiedName").readOnly=false; 
             document.getElementById("verifiedName").value=`${returnedJson.firstName} : VERIFIED`;
             document.getElementById("verifiedName").readOnly=true;
-            document.getElementById("tryAgain").innerHTML="";  // reset
+            document.getElementById("tryAgain").innerHTML="";  // reset warning
            
           }
             console.log("data received after api call", returnedJson);

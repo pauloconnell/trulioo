@@ -127,16 +127,9 @@ app.get("/getFields/:name", (req, res)=> {
           console.log(name+"passed");
           return res.send(name+" has been verified");  
         }
-        
       }
-      
-                         
-      
-     
-      if(!peopleList[0]){
-        res.send("Must verify first, please reset page and complete verification form");
-      }
-      //res.send(JSON.stringify(peopleList[0]));
+      name=name+" has not been verified - ensure you use format for Name : FirstLast with no spaces"
+      res.send(name);
     });
 });
  
