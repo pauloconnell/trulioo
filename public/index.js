@@ -33,17 +33,18 @@ dreamsForm.addEventListener("submit", event => {
   console.log(event.target);
   if(!document.getElementById("verifiedName").value){
     document.getElementById("tryAgain").innerHTML="Please complete form above to fill in verified name";
+    document.getElementById("capitalRequest").value="";
     return;  
   }
   if((!document.getElementById("capitalRequest").value) && (document.getElementById("noCapitalExpense").checked=false)){
-    document.getElementById("formLabel").value="Please enter Capital expense or click check box to avoid all expenses";
+    document.getElementById("formLabel").value="Please enter Capital expense ";
     return;
   }
   // get dream value and add it to the list
   let newDream = document.getElementById("capitalRequest").value;
   const thisName=document.getElementById("verifiedName").value;
   if(document.getElementById("noCapitalExpense").checked==true){
-    newDream= newDream+"Avoid all Capital Expense "  
+    newDream= "Avoid all Capital Expense related to: "+newDream;  
   }
   newDream=`${newDream} Voter: ${thisName}`;
   appendNewDream(newDream);  // wraps item in <Li> and adds to our list
