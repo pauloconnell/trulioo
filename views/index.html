@@ -19,11 +19,11 @@
   </head>
   <body><center>
     <header>
-      <h1>On-line Strata Voting Example</h1>
+      <h1>Municiple Capital Expense WishList</h1>
     </header>
 
     <main>
-      <h2>Using Trulioo's trusted verification to aggregate strata member's feedback. </h2>
+      <h2> Join with Trulioo's trusted verification.  Help us get comunity feedback. </h2>
       <hr>
       <div id="trulioo-embedid"></div>
 
@@ -73,9 +73,9 @@
           document.getElementById("verifiedName").readOnly=true;
           // Not verified => disable buttons to force refresh so EmbedId can be tried again
           document.getElementById("submit-concern").disabled = true;
-          document.getElementById("button-no").disabled = true;
+         // document.getElementById("button-no").disabled = true;
           document.getElementById("submit-concern").style.backgroundColor = 'Red';
-          document.getElementById("button-no").style.backgroundColor = 'Red';
+          //document.getElementById("button-no").style.backgroundColor = 'Red';
         }
         else{
           displayResult.innerHTML="Verified :) Welcome "+returnedJson.firstName+"You may use form below:";
@@ -111,25 +111,31 @@
       <h2 id="verifiedResponse"> Please verify above
       </h2>
       <hr>
-      <p>Please select your primary concern in terms of <br><b>Strata Capital Projects:</b></p>
+      <p class="background">Please select your primary concern in terms of <br><b>Municiple Capital Projects:</b></p>
 
       <form>
-        <label>
+        <label id="formLabel">
           Enter Project and Details:        
         </label>
-        <input name="capitalRequest" id="capitalRequest" type="text" maxlength="100" required placeholder="Specific Capital Project">
-        <label>Name: completed when verified</label>  
-        <input readonly name="verifiedName" id="verifiedName" type="text" required placeholder="Please verify above ">
+        <input name="capitalRequest" id="capitalRequest" type="text" maxlength="100"  placeholder="Specific Capital Project" >
+        
+        <span class="background" >
+        <input type="checkbox" id="noCapitalExpense" name="noCapitalExpense"><label for="noCapitalExpense">Avoid expenses</label> 
+        </span>
+        <span class="background">
+        <label for="verifiedName">Name: completed when verified</label>  
+        <input readonly name="verifiedName" id="verifiedName" type="text" placeholder="Please verify above " required>
+        </span>  
         <center>
         <button type="submit" id="submit-concern">Add Capital Expense request/concern</button>
-        <button type="button" id="button-no">Avoid/No Capital expenses</button> 
+        
         </center>
       </form>
 
        
       <hr>
       <section class="dreams">
-        <div id="strataList">
+        <div class="background">
           <ul id="dreams">
             <em>loading dreams&hellip;</em>
           </ul>

@@ -6,15 +6,13 @@ var trulioo = require("trulioo-embedid-middleware");
 
 
 //actual list can be saved to MongoDB or JSON file
-//var fs      = require("fs");
-//var data=fs.readFileSync("list.json");
 
 
 // our default array of Strata wishes
 const dreams = [
-  "Replace fences",
-  "Cut down big pine trees",
-  "Tesla solar roof"
+  "Replace fences : Verified",
+  "Cut down big pine trees : Verified",
+  "Tesla solar roof : Verified"
 ];
 
 
@@ -29,8 +27,9 @@ app.all('/', function(req, res, next) {
   });
 
 
+// install trulioo middleware for node
 const truliooMiddleware = require('trulioo-embedid-middleware')({ 
-apiKey: process.env.BE });  //switch experience (data fields required) by using other apiKeys like BE2(used for testing)
+apiKey: process.env.BE });  //NOTE: can switch experience(data fields required ect.) by using other apiKeys like BE2 I used for testing
 const port = 8080; 
 // truliooMiddleware will handle accesstoken 
 app.use(truliooMiddleware); 
@@ -60,35 +59,12 @@ request(options, function (error, response, body) {
 
 
 
-//  NODE Middleware handles ID Tokens in header AUTOMATICLY
-// initial connection set up...now connect to 'experience' with keys:
-
-// app.post(process.cwd+'/trulioo-api/embidids/tokens/:publicKey', (req, res)=>{
-//   var options = {
-//     method: 'post',
-//     url: "https://api-gateway-admin.trulioo.com/embedids/tokens",
-//     headers:{
-//         "Content-Type": "application/json",
-//         "cache-control": "no-cache",
-//         "x-trulioo-api-key":process.env.BE,
-//       }
-    
-//   }         
-//          });
-  
-
-
-
-
-// set up simple api to handle unique transId to call with
+// set up simple api to handle unique transId to call for verification with
 app.post("/api",(req, res)=>{
  
   console.log("Server.js 87 recieved from front end ",req.body );
   var transIdURL=req.body.url;
   console.log("88transId in URL is ", transIdURL);
-  //if(req.body.sendBackUrl){
-  //  transId=req.body.sendBackUrl;
-  //  }
   if(!transIdURL){
     console.log("failed verification");
     return res.json({"verification": "failed"});
@@ -105,36 +81,26 @@ app.post("/api",(req, res)=>{
 
     request(options, function (error, response, body) {
     if (error) throw new Error(error);
-    //console.log(" 87 server.js response keys are  ", Object.keys(response));
     console.log("inside request  Server.js 108 result of verification is :", typeof(body), body);
-    //document.getElementById("trulioo")=body;
     let jsonOutput=JSON.parse(body);
     console.log(" body keys are ", Object.keys(jsonOutput));
     
-      //console.log("output will be ", {"verification Result": jsonOutput.transactionResult}, jsonOutput.steps[0].inputFields[4], jsonOutput.steps[0].inputFields[5]);//.transactionResult);
       let responseObject={"verification_Result": jsonOutput.transactionResult};
+      // loading up name fields to send back to front end
       responseObject.firstName=jsonOutput.steps[0].inputFields[4].Value;
       responseObject.lastName=jsonOutput.steps[0].inputFields[5].Value;
       console.log("send back to front end: ", responseObject);
-      res.json(responseObject);//jsonOutput.transactionResult);//.transactionResult);
+      res.json(responseObject);
   });
  }  
 });
 
-// //send data from 
-// app.post("https://gateway.trulioo.com/trial/verifications/v1/verify?",(req,res)=>{
-//   console.log(res);
-  
-// });
 
  
 
 // send the default array of dreams to the webpage
 app.get("/dreams", (request, response) => {
   // express helps us take JS objects and send them as JSON
-  
-
-
   response.json(dreams);
 });
 
