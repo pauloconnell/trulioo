@@ -19,11 +19,11 @@
   </head>
   <body><center>
     <header>
-      <h1>On-line Strata Voting Example</h1>
+      <h1>Municiple Capital Expense WishList</h1>
     </header>
 
     <main>
-      <h2>Using Trulioo's trusted verification to aggregate strata member's feedback. </h2>
+      <h2> Join with Trulioo's trusted verification.  Help us get comunity feedback. </h2>
       <hr>
       <div id="trulioo-embedid"></div>
 
@@ -39,7 +39,7 @@
       return;
     }
     console.log('inside index.html script handleResponse data:', e); 
-    console.log(" called/logged after submitting form, response is :",e.experienceTransactionId);
+    console.log("Your TransactionId is :",e.experienceTransactionId);
     let txId=e.experienceTransactionId;
     // now send this TxId to backend to make secure connection:
     let sendBackUrl='https://gateway.trulioo.com/experienceTransaction/'+txId;
@@ -49,7 +49,7 @@
     }
    // now send getURL to back end...use post,  create api to handle in backend    
     
-    // this call needs to happen from the backend to hide env.key
+    // call needs to happen from the backend to hide .env BE key
     var options = {
       method: 'POST',
       headers:{
@@ -71,52 +71,38 @@
           document.getElementById("verifiedName").readOnly=false; 
           document.getElementById("verifiedName").value="Not Verified, please refresh page";
           document.getElementById("verifiedName").readOnly=true;
+          // Not verified => disable buttons to force refresh so EmbedId can be tried again
           document.getElementById("submit-concern").disabled = true;
-          document.getElementById("button-no").disabled = true;
+         // document.getElementById("button-no").disabled = true;
           document.getElementById("submit-concern").style.backgroundColor = 'Red';
-          document.getElementById("button-no").style.backgroundColor = 'Red';
+          //document.getElementById("button-no").style.backgroundColor = 'Red';
         }
         else{
           displayResult.innerHTML="Verified :) Welcome "+returnedJson.firstName+"You may use form below:";
           console.log(returnedJson, returnedJson.firstName, returnedJson.lastName)
           if(returnedJson.firstName){
             
+            // fill in name details ONLY if Verified, keep input box read only=locked
             document.getElementById("verifiedName").readOnly=false; 
-            document.getElementById("verifiedName").value=`${returnedJson.firstName} ${returnedJson.lastName} : VERIFIED`;
+            document.getElementById("verifiedName").value=`${returnedJson.firstName} : VERIFIED`;
             document.getElementById("verifiedName").readOnly=true;
           }
             console.log("data received after api call", returnedJson);
         }
     });
       
-
-    
-    
-    
-    //this is backend call
-//     request.headers={x-trulioo-api-key: {cad38158eeb147b38cc7e43d2fd25f05}}
-//       request(options, function (error, response, body) {
-//       if (error) throw new Error(error);
-//       console.log("server.js response.connection.eventsCount is ", response.connection._eventsCount)
-//       console.log("inside initial server request ",Object.keys(response.connection));
-//       console.log(" connection secureEstablished? authorized? ",response.connection._secureEstablished, response.connection.authorized)
-
-//     });
-    
-    
-      
-  }  // end of handleResponse
+  }  // end of handleResponse()
 
   <!-- Initialize your form here with your Frontend (FE) key -->
   const publicKey = "cad38158eeb147b38cc7e43d2fd25f05"; // Public Key FE
   const accessTokenURL = 'http://localhost:8080';
   new TruliooClient({ 
     publicKey, 
-   // accessTokenURL, //handled by middleware
+   // accessTokenURL, //handled by node middleware
     handleResponse 
   });
-  //see errorin TruliooCLient @ 97, seems it requires this abstract function to be defined:
-  function errorHandler(err,str){
+  // I saw error TruliooCLient @ 97, seems to require abstract function to be defined?
+  function errorHandler(err,str){        // but I haven't seen this error being caught either
     console.log("TruliooClient error caught in index.html line 110", err, str);
   }
   
@@ -125,25 +111,31 @@
       <h2 id="verifiedResponse"> Please verify above
       </h2>
       <hr>
-      <p>Please select your primary concern in terms of <br><b>Strata Capital Projects:</b></p>
+      <p class="background">Please select your primary concern in terms of <br><b>Municiple Capital Projects:</b></p>
 
       <form>
-        <label>
+        <label id="formLabel">
           Enter Project and Details:        
         </label>
-        <input name="capitalRequest" id="capitalRequest" type="text" maxlength="100" required placeholder="Specific Capital Project">
-        <label>Name: completed when verified</label>  
-        <input readonly name="verifiedName" id="verifiedName" type="text" required placeholder="Please verify above ">
+        <input name="capitalRequest" id="capitalRequest" type="text" maxlength="100"  placeholder="Specific Capital Project" >
+        
+        <span class="background" >
+        <input type="checkbox" id="noCapitalExpense" name="noCapitalExpense"><label for="noCapitalExpense">Avoid expenses</label> 
+        </span>
+        <span class="background">
+        <label for="verifiedName">Name: completed when verified</label>  
+        <input readonly name="verifiedName" id="verifiedName" type="text" placeholder="Please verify above " required>
+        </span>  
         <center>
         <button type="submit" id="submit-concern">Add Capital Expense request/concern</button>
-        <button type="button" id="button-no">Avoid/No Capital expenses</button> 
+        
         </center>
       </form>
 
        
       <hr>
       <section class="dreams">
-        <div id="strataList">
+        <div class="background">
           <ul id="dreams">
             <em>loading dreams&hellip;</em>
           </ul>
@@ -156,12 +148,6 @@
 
     <footer>Made by <b>Paul O'Connell</b> 2020</footer>
 
-    <!-- include the Glitch button to show what the webpage is about and
-          to make it easier for folks to view source and remix 
-    No need for this button 
-    <div class="glitchButton" style="position:sticky;bottom:2em;right:20px;"> View source in Glitch</div>
-    <script src="https://button.glitch.me/button.js" defer></script>
-    -->
     </center>
     
   </body>

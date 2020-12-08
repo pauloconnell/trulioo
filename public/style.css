@@ -59,11 +59,11 @@ footer {
   border-top: 1px solid lightgrey;
 }
 
-
-#button-no {
-  margin:15px;
+.background {
+  background-color:rgba(192,192,192,.7);
 }
 
-#strataList{
+
+#verifiedResponse {
   background-color:rgba(192,192,192,.7);
 }
