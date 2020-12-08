@@ -86,6 +86,7 @@
             document.getElementById("verifiedName").readOnly=false; 
             document.getElementById("verifiedName").value=`${returnedJson.firstName} : VERIFIED`;
             document.getElementById("verifiedName").readOnly=true;
+            document.getElementById("tryAgain").innerHTML="";  // reset
           }
             console.log("data received after api call", returnedJson);
         }
