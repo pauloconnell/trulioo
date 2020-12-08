@@ -31,6 +31,10 @@ dreamsForm.addEventListener("submit", event => {
   // stop our form submission from refreshing the page
   event.preventDefault();
   console.log(event.target);
+  if(!document.getElementById("verifiedName").value){
+    document.getElementById("tryAgain").innerHTML="Please complete form above to fill in verified name";
+    return;  
+  }
   if((!document.getElementById("capitalRequest").value) && (document.getElementById("noCapitalExpense").checked=false)){
     document.getElementById("formLabel").value="Please enter Capital expense or click check box to avoid all expenses";
     return;
@@ -38,11 +42,10 @@ dreamsForm.addEventListener("submit", event => {
   // get dream value and add it to the list
   let newDream = document.getElementById("capitalRequest").value;
   const thisName=document.getElementById("verifiedName").value;
-  newDream=`${newDream} Voter: ${thisName}`
-  if(document.getElementById("noCapitalExpense")){
-    newDream= "Avoid all Capital Expense "  
+  if(document.getElementById("noCapitalExpense").checked==true){
+    newDream= newDream+"Avoid all Capital Expense "  
   }
-
+  newDream=`${newDream} Voter: ${thisName}`;
   appendNewDream(newDream);  // wraps item in <Li> and adds to our list
   // reset form Capital Expense only
   //dreamsForm.reset();
@@ -50,24 +53,4 @@ dreamsForm.addEventListener("submit", event => {
   document.getElementById("capitalRequest").focus();
 });
 
-//listen for the 2nd button to be clicked
-// replaced with checkBox for simplicity
 
-// noExpenseButton.addEventListener("click", event=>{
-//   console.log("Inside button id:",event.target.id);
-//   let newDream = document.getElementById("capitalRequest".value); 
-//   if (!newDream){
-//     newDream=" *ALL/ANY  AVOIDABLE *";
-//   }
-//   newDream="Avoid Captital expense related to: "+newDream;
-//   const thisName=document.getElementById("verifiedName").value;
-//   newDream=newDream+thisName;
-//   console.log(dreamsList, newDream);
-  
-//   appendNewDream(newDream);
-//   // reset form Capital Expense only
-//   //dreamsForm.reset();
-//    document.getElementById("capitalRequest").value="";  // reset to allow multiple items 
-//   dreamsForm.elements.dream.focus();
-
-// })
