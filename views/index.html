@@ -109,25 +109,25 @@
   }
   
 </script>
-      <h2 id="verifiedResponse"> Please verify above
+      <h2 id="verifiedResponse" class="background"> Please verify above
       </h2>
       <hr>
-      <p class="background">Please select your primary concern in terms of <br><b>Municiple Capital Projects:</b></p>
-
+      
       <form>
+      <center><span class="background">Please select your primary concern in terms of <br><b>Municiple Capital Projects:</b></span>
+        <div class="border">
         <label id="formLabel">
-          Enter Project and Details:        
+          Enter Project and Details        
         </label>
         <input name="capitalRequest" id="capitalRequest" type="text" maxlength="100"  placeholder="Specific Capital Project" required>
-        
-        <span class="background" >
+        </div>
+        <div class="border">
         <input type="checkbox" id="noCapitalExpense" name="noCapitalExpense"><label for="noCapitalExpense">Avoid expenses</label> 
-        </span>
-        <span class="background" id="nameSpan">
-        <label for="verifiedName">Name: completed when verified</label>  
-        <input readonly name="verifiedName" id="verifiedName" type="text" placeholder="Please verify above " required>
-        </span>  
-        <center>
+        </div>
+        <div class="border" id="nameSpan">
+        <label for="verifiedName">Name: Please verify above</label>  
+        <input readonly name="verifiedName" id="verifiedName" type="text" placeholder="Name: Please verify above " required>
+        </div>  
           <div id="tryAgain">
           </div>
         <button type="submit" id="submit-concern">Add Capital Expense request/concern</button>
