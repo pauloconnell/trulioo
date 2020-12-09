@@ -61,11 +61,18 @@ footer {
 
 .background {
   background-color:rgba(192,192,192,.7);
+  width:50%;
+  max-width:600px;
 }
 
 
+.border {
+   border: 1px solid black;
+}
+
 #verifiedResponse {
   background-color:rgba(192,192,192,.7);
+  max-width:450px;
 }
 
 #tryAgain {
