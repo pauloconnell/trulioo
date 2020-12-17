@@ -23,9 +23,15 @@
     <script src="/index.js" defer></script>
   </head>
 
-  <script>
+  <!-- This script renders the form for Trulioo EmbedId  -->
+  <script
+    type="text/javascript"
+    src="https://js.trulioo.com/latest/main.js"
+          ></script>
+  
     // Handle the response of EmbedID after form submits
-    function handleResponse(e) {
+  <script>
+  function handleResponse(e) {
       if(!e){
         console.log("handle response called with no object");
         return;
@@ -114,12 +120,6 @@
         </h2>
         <hr />
         <div id="trulioo-embedid"></div>
-
-        <!-- This script renders the form for the div above -->
-        <script
-          type="text/javascript"
-          src="https://js.trulioo.com/latest/main.js"
-        ></script>
 
         <h2 id="verifiedResponse" class="background">Please verify above</h2>
         <hr />
