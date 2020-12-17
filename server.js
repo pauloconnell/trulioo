@@ -148,7 +148,7 @@ app.get("/getFields/:name", (req, res) => {
 // send the default array of dreams to the webpage
 app.get("/dreams", (request, response) => {
   // dreams array is defined above @ line 12  ...JS object  sent as JSON
-
+  // would load and save to this list on mondoDB
   response.json(dreams);
 });
 
