@@ -1,7 +1,11 @@
-# hello-express
+## Trulioo Verification
 
-A server that serves a webpage, its resources, and some data
 
+
+- this app gets users to verify using trulioo, we catch the TransactionId on front end
+- sent here to backend to retrieve results of the verification and send name and verification result to frontend
+
+- once someone is verified they can add items to the list of 'dreams' for public capital projects
 
 ## Your Project
 

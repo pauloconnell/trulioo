@@ -8,9 +8,8 @@ body {
   font-family: sans-serif;
   margin: 2em 1em;
   line-height: 1.5em;
-   background: 
-  url(https://res.cloudinary.com/pollie/image/upload/v1606771736/Lux_Downtown_c5inrb.jpg);
- 
+  background: url(https://res.cloudinary.com/pollie/image/upload/v1606771736/Lux_Downtown_c5inrb.jpg);
+
   background-size: flex;
 }
 
@@ -38,10 +37,11 @@ input {
   width: 100%;
 }
 
-form button, button {
+form button,
+button {
   background-color: #bbbbf2;
   border: 2px solid currentColor;
-  border-radius: .25em;
+  border-radius: 0.25em;
   cursor: pointer;
   font-size: inherit;
   line-height: 1.4em;
@@ -49,7 +49,8 @@ form button, button {
   max-width: 20ch;
 }
 
-form button:hover, button:hover {
+form button:hover,
+button:hover {
   background-color: lavender;
 }
 
@@ -60,21 +61,20 @@ footer {
 }
 
 .background {
-  background-color:rgba(192,192,192,.7);
-  width:50%;
-  max-width:600px;
+  background-color: rgba(192, 192, 192, 0.7);
+  width: 50%;
+  max-width: 600px;
 }
 
-
 .border {
-   border: 1px solid black;
+  border: 1px solid black;
 }
 
 #verifiedResponse {
-  background-color:rgba(192,192,192,.7);
-  max-width:450px;
+  background-color: rgba(192, 192, 192, 0.7);
+  max-width: 450px;
 }
 
 #tryAgain {
-  background-color:yellow;
+  background-color: yellow;
 }
