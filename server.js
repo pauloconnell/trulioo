@@ -3,9 +3,12 @@ const app = express();
 var request = require("request");
 var trulioo = require("trulioo-embedid-middleware");
 
-//actual list can be saved to MongoDB or JSON file
+// this app gets users to verify using trulioo, we catch the TransactionId on front end
+// sent here to backend to retrieve results of the verification and send name and verification result to frontend
 
-// our default array of Strata wishes
+//once someone is verified they can add items to the list of 'dreams' for public capital projects
+
+// our default array of Strata wishes//actual list can be saved to MongoDB or JSON file
 const dreams = [
   "Replace fences : Verified",
   "Cut down big pine trees : Verified",
